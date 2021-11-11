@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "preLaunchTask": "build-dev",
+            "postDebugTask": "stop",
+            "type": "node",
+            "request": "launch",
+            "name": "Launch app.ts",
+            "program": "${workspaceFolder}\\build/app.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "development" 
+            },
+            "console": "internalConsole",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceFolder}/build/app.js"
+            ]
+        }
+    ]
+}

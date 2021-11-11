@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "outDir": "build",
+        "module": "commonjs",
+        "sourceMap": true,
+        "watch": false,
+        "experimentalDecorators": true,
+    },
+    "files":[
+        "app.ts"
+    ]
+}
+
