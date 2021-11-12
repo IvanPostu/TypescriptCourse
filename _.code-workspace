@@ -10,6 +10,7 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     },
+    "js/ts.implicitProjectConfig.experimentalDecorators":true,
     "terminal.integrated.defaultProfile.windows": "Git Bash",
     "terminal.integrated.cwd": "${workspaceFolder}",
     "window.titleBarStyle": "custom",
