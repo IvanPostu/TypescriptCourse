@@ -8,6 +8,6 @@ module.exports = {
       'prettier', 
     ],
   rules: {
-    'prettier/prettier': 'warn',
+    "prettier/prettier": ["warn", { "endOfLine": "auto" }]
   },
 }
