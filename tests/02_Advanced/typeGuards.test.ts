@@ -32,11 +32,11 @@ describe('Test type guards typescript mechanism', () => {
 
     test('Custom type guard', () => {
 
-        function isA(a: any): a is A {
+        function isA(a: unknown): a is A {
             return (<A>a).a !== undefined
         }
 
-        const var1: any = new A()
+        const var1: unknown = new A()
 
         expect(isA(var1)).toBeTruthy()
         if(isA(var1)){

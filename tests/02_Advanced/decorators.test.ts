@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 describe('Test decorators future', () => {
 
     test('Function decorator factory', () => {
-        let decoratorAppliedCount: number = 0
+        let decoratorAppliedCount = 0
 
         // decorator factory
-        function decorator(paramExample: string) {
-
+        function decorator(paramExample: string): CallableFunction {
             //decorator
-            return function (target: Function) {
+            return function (target: () => void): void {
                 decoratorAppliedCount++
             }
         }
@@ -31,14 +31,14 @@ describe('Test decorators future', () => {
 
     test('Sealed class', () => {
 
-        function sealed(target: Function): void {
+        function sealed(target: CallableFunction): void {
             Object.seal(target)
             Object.seal(target.prototype)
         }
 
         @sealed
         class A {
-            [ket: string]: any
+            [ket: string]: unknown
 
             getA() {
                 return 'A'
@@ -57,10 +57,10 @@ describe('Test decorators future', () => {
     })
 
     test('Replace constructors', () => {
-        let count: number = 0
+        let count = 0
 
-        function logger<TFunction extends { new(...args: any[]): {} }>(target: Function) {
-            const newConstructor: Function = function () {
+        function logger<TFunction extends { new(...args: unknown[]) }>(target: CallableFunction) {
+            const newConstructor: CallableFunction = function () {
                 count++
             }
 
@@ -87,21 +87,37 @@ describe('Test decorators future', () => {
     test('Method decorator', () => {
         'use strict'
 
-        function readonly(target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
-            descriptor.writable = false
-        }
+        function writable(isWritable:boolean) {
+            return function (
+              target: object,
+              key: string | symbol,
+              descriptor: PropertyDescriptor
+            ) {
+              descriptor.writable = isWritable
+              return descriptor;
+            };
+          }
+
 
         class A {
-            @readonly
+            @writable(false)
+            q() { return 1 }
+        }
+
+        class B {
+            @writable(true)
             q() { return 1 }
         }
 
         const a: A = new A
+        const b: B = new B
 
         expect(() => {
             a.q = () => 2
         }).toThrow(TypeError)
 
+        b.q = () => 22
+        expect(b.q()).toBe(22)
     })
 
 

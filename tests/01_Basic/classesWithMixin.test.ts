@@ -43,7 +43,7 @@ describe('Test classes functionality', () => {
             }
         }
 
-        function applyMixins(derivedCtor: any, baseCtors: any[]){
+        function applyMixins(derivedCtor: CallableFunction, baseCtors: CallableFunction[]){
             baseCtors.forEach(baseCtor => {
                 Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
                     derivedCtor.prototype[name] = baseCtor.prototype[name]
@@ -67,8 +67,7 @@ describe('Test classes functionality', () => {
         expect(librarian === researcher).toBeTruthy()
         expect(librarian === employee).toBeTruthy()
 
-        // @ts-ignore
-        expect(researcher === employee).toBeTruthy()
+        expect(researcher === (employee as UniversityLibrarian)).toBeTruthy()
     })
 
 })

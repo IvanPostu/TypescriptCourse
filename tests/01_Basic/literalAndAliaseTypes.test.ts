@@ -4,7 +4,7 @@ describe('Test literal and aliases', () => {
 
     test('Literal type', () => {
 
-        const q: 'Category' = 'Category'
+        const q: 'Category' | 'Type' = 'Category'
 
         expect(q).toBe('Category')
 
@@ -12,9 +12,9 @@ describe('Test literal and aliases', () => {
 
     test('Aliases', () => {
         type EmployeeType = 'Boss' | 'Manager'
-        
-        const employee1 : EmployeeType = 'Boss'
-        const employee2 : EmployeeType = 'Manager'
+
+        const employee1: EmployeeType = 'Boss'
+        const employee2: EmployeeType = 'Manager'
 
         expect(employee1).toBe('Boss')
         expect(employee2).toBe('Manager')

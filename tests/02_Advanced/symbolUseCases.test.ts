@@ -13,7 +13,7 @@ describe('Test symbol use cases', () => {
 
     test('Class with unique id', () => {
 
-        const CLASS_INFO: symbol = Symbol('Class description')
+        const CLASS_INFO: unique symbol = Symbol('Class description')
 
         class A {
             public a: number
@@ -33,14 +33,18 @@ describe('Test symbol use cases', () => {
         class A {
             public name: number
 
-            static [Symbol.hasInstance](obj: Object){
-                return obj.hasOwnProperty('name') && obj.hasOwnProperty('callMe')
+            static [Symbol.hasInstance](obj: Record<string, unknown>){
+                const isInstanceof: boolean = Object.keys(obj)
+                    .includes('name') && Object.keys(obj)
+                    .includes('callMe')
+
+                return isInstanceof
             }
         }
 
         const obj = {
             name: '123',
-            callMe: () => {}
+            callMe: () => {console.log(1)}
         }
         
         expect(obj instanceof A).toBeTruthy()

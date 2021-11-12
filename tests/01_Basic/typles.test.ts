@@ -43,7 +43,7 @@ describe('Test typles operator', () => {
             return a
         }
 
-        let tupleInstance1: [number, string] = [1, 'aa']
+        const tupleInstance1: [number, string] = [1, 'aa']
         let tupleInstance2: IKeyValueTyple<number, string> = [
             2, 'bb'
         ]
