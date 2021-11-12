@@ -4,7 +4,8 @@
 * Using Advanced Type Features
 * Creating and using decorators
 * Implementing asynchronous patterns
-* Writing cleaner code with TSLint
+* Writing cleaner code with ESLint & Prettier
+* Using git hooks with Husky
 
 
 ### Rerefences:
