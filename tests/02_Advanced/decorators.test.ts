@@ -1,125 +1,116 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 describe('Test decorators future', () => {
+  test('Function decorator factory', () => {
+    let decoratorAppliedCount = 0;
 
-    test('Function decorator factory', () => {
-        let decoratorAppliedCount = 0
+    // decorator factory
+    function decorator(paramExample: string): CallableFunction {
+      //decorator
+      return function (target: () => void): void {
+        decoratorAppliedCount++;
+      };
+    }
 
-        // decorator factory
-        function decorator(paramExample: string): CallableFunction {
-            //decorator
-            return function (target: () => void): void {
-                decoratorAppliedCount++
-            }
-        }
+    @decorator('hi')
+    class A {}
 
-        @decorator("hi")
-        class A { }
+    @decorator('hi')
+    class B {}
 
-        @decorator("hi")
-        class B { }
+    const instance1 = new A();
+    const instance2 = new A();
+    const instance3 = new A();
+    const instance4 = new A();
+    const instance5 = new A();
+    const instance6 = new A();
 
-        const instance1 = new A
-        const instance2 = new A
-        const instance3 = new A
-        const instance4 = new A
-        const instance5 = new A
-        const instance6 = new A
+    expect(decoratorAppliedCount).toBe(2);
+  });
 
-        expect(decoratorAppliedCount).toBe(2)
-    })
+  test('Sealed class', () => {
+    function sealed(target: CallableFunction): void {
+      Object.seal(target);
+      Object.seal(target.prototype);
+    }
 
-    test('Sealed class', () => {
+    @sealed
+    class A {
+      [ket: string]: unknown;
 
-        function sealed(target: CallableFunction): void {
-            Object.seal(target)
-            Object.seal(target.prototype)
-        }
+      getA() {
+        return 'A';
+      }
+    }
 
-        @sealed
-        class A {
-            [ket: string]: unknown
+    class B extends A {
+      getB() {
+        return 'B';
+      }
 
-            getA() {
-                return 'A'
-            }
-        }
+      public q = 22;
+    }
+  });
 
-        class B extends A {
+  test('Replace constructors', () => {
+    let count = 0;
 
+    function logger<TFunction extends { new (...args: unknown[]) }>(target: CallableFunction) {
+      const newConstructor: CallableFunction = function () {
+        count++;
+      };
 
-            getB() {
-                return 'B'
-            }
+      newConstructor.prototype = Object.create(target.prototype);
+      newConstructor.prototype.constructor = target;
 
-            public q = 22
-        }
-    })
+      return <TFunction>newConstructor;
+    }
 
-    test('Replace constructors', () => {
-        let count = 0
+    @logger
+    class A {}
 
-        function logger<TFunction extends { new(...args: unknown[]) }>(target: CallableFunction) {
-            const newConstructor: CallableFunction = function () {
-                count++
-            }
+    @logger
+    class B {}
 
-            newConstructor.prototype = Object.create(target.prototype)
-            newConstructor.prototype.constructor = target
+    const a = new A();
+    const b = new B();
+    const b1 = new B();
 
-            return <TFunction>newConstructor
-        }
+    expect(count).toBe(3);
+  });
 
-        @logger
-        class A { }
+  test('Method decorator', () => {
+    'use strict';
 
-        @logger
-        class B { }
+    function writable(isWritable: boolean) {
+      return function (target: object, key: string | symbol, descriptor: PropertyDescriptor) {
+        descriptor.writable = isWritable;
+        return descriptor;
+      };
+    }
 
+    class A {
+      @writable(false)
+      q() {
+        return 1;
+      }
+    }
 
-        const a = new A
-        const b = new B
-        const b1 = new B
+    class B {
+      @writable(true)
+      q() {
+        return 1;
+      }
+    }
 
-        expect(count).toBe(3)
-    })
+    const a: A = new A();
+    const b: B = new B();
 
-    test('Method decorator', () => {
-        'use strict'
+    expect(() => {
+      a.q = () => 2;
+    }).toThrow(TypeError);
 
-        function writable(isWritable:boolean) {
-            return function (
-              target: object,
-              key: string | symbol,
-              descriptor: PropertyDescriptor
-            ) {
-              descriptor.writable = isWritable
-              return descriptor;
-            };
-          }
-
-
-        class A {
-            @writable(false)
-            q() { return 1 }
-        }
-
-        class B {
-            @writable(true)
-            q() { return 1 }
-        }
-
-        const a: A = new A
-        const b: B = new B
-
-        expect(() => {
-            a.q = () => 2
-        }).toThrow(TypeError)
-
-        b.q = () => 22
-        expect(b.q()).toBe(22)
-    })
-
-
-})
-
+    b.q = () => 22;
+    expect(b.q()).toBe(22);
+  });
+});

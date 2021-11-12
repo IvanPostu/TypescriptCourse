@@ -3,14 +3,14 @@
     {
       "path": "./",
       "name": ".root"
-    },
+    }
   ],
 
   "settings": {
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     },
-    "js/ts.implicitProjectConfig.experimentalDecorators":true,
+    "js/ts.implicitProjectConfig.experimentalDecorators": true,
     "terminal.integrated.defaultProfile.windows": "Git Bash",
     "terminal.integrated.cwd": "${workspaceFolder}",
     "window.titleBarStyle": "custom",
@@ -40,6 +40,8 @@
       "**/node_modules/*/**": true,
       "**/build/*/**": false
     },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false,
     "editor.rulers": [120],
     "editor.wordWrapColumn": 120,
     "explorer.decorations.colors": true, //displays no colors
@@ -54,7 +56,6 @@
     "editor.fontSize": 15,
     "editor.fontFamily": "'Fira Code Medium', 'Consolas', monospace, 'Droid Sans Fallback'",
     "editor.fontLigatures": true,
-    "editor.formatOnSave": false,
     "editor.formatOnPaste": false,
     "editor.formatOnType": false,
     "editor.letterSpacing": 0.1,
@@ -90,7 +91,7 @@
         }
       ]
     },
-    
+
     "[xml]": {
       "editor.suggest.insertMode": "replace",
       "editor.tabSize": 2
@@ -99,13 +100,13 @@
       "editor.suggest.insertMode": "replace",
       "editor.tabSize": 4,
       "editor.formatOnSave": true
-    },
+    }
   },
   "extensions": {
     "recommendations": [
       "esbenp.prettier-vscode",
       "dbaeumer.vscode-eslint",
-      "dsznajder.es7-react-js-snippets",
+      "dsznajder.es7-react-js-snippets"
     ]
   }
 }

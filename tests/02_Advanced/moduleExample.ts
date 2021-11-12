@@ -1,6 +1,5 @@
-
 export class ClassExample {
-    a: string
-    b: number
-    c: () => void
+  a: string;
+  b: number;
+  c: () => void;
 }
